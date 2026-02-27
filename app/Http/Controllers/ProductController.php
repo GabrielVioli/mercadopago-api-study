@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product; 
-use App\Requests\ProductValidateRequest;
+use App\Http\Requests\ProductValidateRequest;
+
 
 class ProductController extends Controller
 {
@@ -31,8 +32,8 @@ class ProductController extends Controller
      */
     public function store(ProductValidateRequest $request)
     {
-        Product::create($request->validated());
 
+        Product::create($request->validated());
         return redirect()->back();
     }
 

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
+
+
     <div class="container">
         <h1>Cadastrar Produto</h1>
 
@@ -17,12 +19,14 @@
             </div>
         @endif
 
+
         <form action="{{ route('produto.store') }}" method="POST">
+
             @csrf
 
             <div class="form-group">
                 <label for="title">Nome do Produto</label>
-                <input type="text" name="title" id="title" value="{{ old('title') }}">
+                <input type="text" name="name" id="name" value="{{ old('title') }}">
                 @error('title')
                     <span class="error">{{ $message }}</span>
                 @enderror
