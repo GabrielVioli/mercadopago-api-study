@@ -19,53 +19,60 @@ class ProductController extends Controller
         return view('index', compact('allProducts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view("CreateProduct");
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ProductValidateRequest $request)
     {
-
         Product::create($request->validated());
-        return redirect()->back();
+
+        return response()->json([
+            "message" => "ok",
+            "data" => $request->all()
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        return response()->json([
+            "Status" => "ok",
+            "data" => $product
+        ], 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+
+    public function update(ProductValidateRequest $request, string $id)
     {
-        //
+        $validateData = $request->validated();
+        $product = Product::find($id); #nao usei o findOrFail devido a nao gostar da saida
+        if(!$product) {
+            return response()->json([
+                "message" => "Not found",
+            ], 400);
+        }
+
+        $product->update($validateData);
+        return response()->json([
+            "message" => "ok",
+            "data" => $validateData
+        ], 201);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $product = Product::find($id);
+
+        if($product) { 
+            $product->delete();
+            return response()->json([
+                "message" => "ok",
+            ], 200);
+        }
+
+        return response()->json([
+            "message" => "not found",
+        ], 400);
+        
     }
 }
