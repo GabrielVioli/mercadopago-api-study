@@ -14,9 +14,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $allProducts = Produto::all();
+        $allProducts = Product::all();
 
-        return view('index', compact('allProducts'));
+        return response()->json([
+            "message" => "ok",
+            "data" => $allProducts
+        ], 200);
+
     }
 
     public function store(ProductValidateRequest $request)
@@ -73,6 +77,5 @@ class ProductController extends Controller
         return response()->json([
             "message" => "not found",
         ], 400);
-        
     }
 }
