@@ -1,6 +1,6 @@
 # Documentação da API - Shop
 
-## 📌 Visão Geral
+## Visão Geral
 
 API RESTful para gerenciamento de e-commerce, construída com Laravel e autenticação via tokens Sanctum.
 
@@ -10,7 +10,7 @@ API RESTful para gerenciamento de e-commerce, construída com Laravel e autentic
 
 ---
 
-## 🔐 Autenticação
+## Autenticação
 
 ### Registrar Novo Usuário
 Cria uma nova conta de usuário e retorna um token de autenticação.
@@ -105,7 +105,7 @@ curl -X POST http://localhost:8000/api/login \
 
 ---
 
-## 👤 Gerenciamento de Usuários
+## Gerenciamento de Usuários
 
 ### Obter Dados do Usuário
 Retorna as informações de um usuário específico.
@@ -238,7 +238,7 @@ curl -X DELETE http://localhost:8000/api/user/1 \
 
 ---
 
-## 📦 Gerenciamento de Produtos
+## Gerenciamento de Produtos
 
 ### Listar Todos os Produtos
 Retorna uma lista de todos os produtos cadastrados.
@@ -457,7 +457,7 @@ curl -X DELETE http://localhost:8000/api/product/1 \
 
 ---
 
-## 🛒 Pedidos (Order)
+## Pedidos (Order)
 
 ### Criar Ordem / Checkout
 Gera uma preferência de pagamento utilizando a API do MercadoPago e retorna URLs de checkout para o cliente.
@@ -504,7 +504,7 @@ curl -X POST http://localhost:8000/api/order \
 
 ---
 
-## 📋 Estrutura de Dados
+## Estrutura de Dados
 
 ### Usuário (User)
 ```json
@@ -544,7 +544,7 @@ Os pedidos não possuem um modelo persistido neste serviço. A requisição para
 
 ---
 
-## 🔧 Como Usar
+## Como Usar
 
 ### Obtendo um Token
 1. Registre-se em `/cadastro` ou faça login em `/login`
@@ -587,7 +587,7 @@ curl -X GET http://localhost:8000/api/ \
 
 ---
 
-## ⚠️ Códigos de Resposta HTTP
+## Códigos de Resposta HTTP
 
 | Código | Descrição |
 |--------|-----------|
@@ -599,7 +599,7 @@ curl -X GET http://localhost:8000/api/ \
 
 ---
 
-## 🛡️ Validações
+## Validações
 
 ### Validação de Usuário (Cadastro e Login)
 - **name**: Obrigatório, string
@@ -614,7 +614,7 @@ curl -X GET http://localhost:8000/api/ \
 
 ---
 
-## 📝 Notas Importantes
+## Notas Importantes
 
 1. **Autenticação**: Todos os endpoints de produtos e gerenciamento de usuários requerem autenticação via token Sanctum
 2. **CORS**: Certifique-se de que CORS está configurado corretamente se estiver fazendo requisições de um domínio diferente
@@ -623,7 +623,7 @@ curl -X GET http://localhost:8000/api/ \
 
 ---
 
-## 🔗 Recursos Relacionados
+## Recursos Relacionados
 
 - [Documentação Laravel](https://laravel.com/docs)
 - [Sanctum - Autenticação API](https://laravel.com/docs/sanctum)
