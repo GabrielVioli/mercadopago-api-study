@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserProductController;
 
 
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::get('/user/{id}', [UserController::class, "show"])->name("user.show");
     Route::put('/user/{id}', [UserController::class, "update"])->name('user.update');
-    Route::delete('/user/{id}', [UserController::class, "destroy"])->name("user>delete");
+    Route::delete('/user/{id}', [UserController::class, "destroy"])->name("user.delete");
 
     Route::get('/', [ProductController::class, "index"])->name("products.all");
     Route::post('/product', [ProductController::class, "store"])->name('product.create');
@@ -20,6 +21,9 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::delete('product/{id}', [ProductController::class, "destroy"])->name('product.delete');
 
     Route::post('/order', [OrderController::class, "store"])->name('order.store');
+
+    Route::get('/user/products', [UserProductController::class, "index"])->name('user.products');
+    Route::get('/user/{id}/products', [UserProductController::class, "show"])->name('user.products.show');
 });
 
 Route::post('/cadastro', [UserController::class, "store"])->name("cadastro");

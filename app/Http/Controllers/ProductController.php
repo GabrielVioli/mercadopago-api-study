@@ -25,7 +25,10 @@ class ProductController extends Controller
 
     public function store(ProductValidateRequest $request)
     {
-        Product::create($request->validated());
+        $validateData = $request->validated();
+        $validateData['user_id'] = auth()->id();
+
+        Product::create($validateData);
 
         return response()->json([
             "message" => "ok",
