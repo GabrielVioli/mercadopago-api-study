@@ -1,59 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Shop API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API RESTful para gerenciamento de e‑commerce desenvolvida em Laravel 10.
+A aplicação utiliza autenticação via Laravel Sanctum, fornecendo tokens
+Bearer para acesso aos recursos protegidos.
 
-## About Laravel
+## Funcionalidades
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* Cadastro e autenticação de usuários
+* CRUD completo de produtos
+* Consulta do relacionamento entre usuários e produtos
+* Geração de pedidos com checkout integrado ao MercadoPago
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Todos os endpoints seguem os princípios REST e retornam respostas em JSON.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Estrutura do Projeto
 
-## Learning Laravel
+```text
+app/             # Models, Controllers, Services e lógica de negócio
+config/          # Configurações do framework
+database/        # Migrations, factories e seeders
+public/          # Front controller e ativos públicos
+resources/       # Views, scripts e estilos
+routes/          # Rotas da aplicação (api.php, web.php, console.php)
+tests/           # Testes de unidade e de feature
+vendor/          # Dependências gerenciadas pelo Composer
+API_DOCUMENTATION.md  # Documentação detalhada da API
+README.md        # Este arquivo
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* PHP 8.1+
+* Composer
+* Banco de dados MySQL, MariaDB, PostgreSQL ou SQLite
+* Extensões PHP: OpenSSL, PDO, Mbstring, Tokenizer, XML, Ctype, JSON, BCMath
 
-## Laravel Sponsors
+## Instalação
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+# clonar repositório
+git clone <repo-url> shop
+cd shop
 
-### Premium Partners
+# instalar dependências
+composer install
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# configurar ambiente
+cp .env.example .env
+# editar .env com as credenciais do banco e chaves MercadoPago
 
-## Contributing
+# gerar chave do aplicativo
+php artisan key:generate
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# migrar banco e popular dados iniciais
+php artisan migrate --seed
 
-## Code of Conduct
+# iniciar servidor de desenvolvimento
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Configuração
 
-## Security Vulnerabilities
+A aplicação espera as seguintes variáveis no arquivo `.env`:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```ini
+APP_URL=http://localhost:8000
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=shop
+DB_USERNAME=root
+DB_PASSWORD=
 
-## License
+MERCADOPAGO_CLIENT_ID=...
+MERCADOPAGO_CLIENT_SECRET=...
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Ajuste conforme seu ambiente e banco de dados.
+
+### CORS
+Caso consuma a API de um front-end em outro domínio, configure o CORS
+em `config/cors.php`.
+
+## Autenticação
+
+Os endpoints públicos são `/cadastro` e `/login`. Todos os demais
+requerem cabeçalho:
+
+```
+Authorization: Bearer {TOKEN}
+```
+
+O token é retornado nas respostas de cadastro e login.
+
+## Documentação da API
+
+A documentação completa, com parâmetros, exemplos de requisição e resposta,
+esta disponível em `API_DOCUMENTATION.md`.
+
+## Relacionamentos de Modelo
+
+* `User` possui muitos `Product`.
+* Produtos recebem `user_id` na criação.
+* Pedidos são construídos dinamicamente via serviço MercadoPago e não são
+  persistidos no banco.
+
+Modelos principais:
+
+* `app/Models/User.php`
+* `app/Models/Product.php`
+
+## Execução de Testes
+
+O projeto inclui testes de exemplo em `tests/`.
+Para rodar os testes:
+
+```bash
+php artisan test
+```
+
+Adicione novos testes em `tests/Feature` ou `tests/Unit` conforme necessário.
+
+## Convenções
+
+* Respostas JSON no formato `{ "message": "...", "data": ... }`.
+* Códigos HTTP utilizados: 200, 201, 400, 404, 500.
+* Validações implementadas com `FormRequest` ou `Validator`.
+
+## Boas práticas
+danálise
+* Revogue tokens de API via Sanctum quando necessário.
+* Mantenha as variáveis de ambiente seguras e fora do controle de versão.
+
+## Recursos Úteis
+
+* [Documentação Laravel](https://laravel.com/docs)
+* [Sanctum](https://laravel.com/docs/sanctum)
+* [Boas práticas RESTful](https://restfulapi.net)
+
+## Licença
+
+Descreva aqui a licença do projeto ou remova esta seção se não for
+aplicável.
+
+---
+
+*Última atualização: 4 de março de 2026*
+

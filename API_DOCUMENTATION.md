@@ -111,7 +111,7 @@ curl -X POST http://localhost:8000/api/login \
 Retorna as informações de um usuário específico.
 
 **Endpoint:** `GET /user/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Método HTTP:** GET
 
 #### Parâmetros
@@ -159,7 +159,7 @@ curl -X GET http://localhost:8000/api/user/1 \
 Atualiza as informações de um usuário.
 
 **Endpoint:** `PUT /user/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Content-Type:** `application/json`
 
 #### Parâmetros
@@ -215,7 +215,7 @@ curl -X PUT http://localhost:8000/api/user/1 \
 Deleta um usuário da base de dados.
 
 **Endpoint:** `DELETE /user/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Método HTTP:** DELETE
 
 #### Parâmetros
@@ -238,13 +238,85 @@ curl -X DELETE http://localhost:8000/api/user/1 \
 
 ---
 
+## Relacionamento Usuário-Produto
+
+### Listar todos os produtos com seus donos
+Retorna todos os produtos junto com o usuário que é dono (relação `user`).
+
+**Endpoint:** `GET /user/products`  
+**Autenticação:** Requerida  
+**Método HTTP:** GET
+
+#### Resposta de Sucesso (200 OK)
+```json
+{
+  "message": "ok",
+  "data": [
+    {
+      "id": 1,
+      "name": "Produto A",
+      "quantity": 5,
+      "unit_price": 100.0,
+      "description": "Descrição",
+      "user": {
+        "id": 2,
+        "name": "Nome do Usuário",
+        "email": "user@example.com"
+      }
+    }
+  ]
+}
+```
+
+#### Exemplo de Requisição
+```bash
+curl -X GET http://localhost:8000/api/user/products \
+  -H "Authorization: Bearer {TOKEN}"
+```
+
+---
+
+### Listar produtos de um usuário
+Retorna os produtos associados a um usuário específico.
+
+**Endpoint:** `GET /user/{id}/products`  
+**Autenticação:** Requerida  
+**Parâmetros:**
+| Parâmetro | Tipo | Descrição |
+|-----------|------|-----------|
+| id | integer | ID do usuário |
+
+#### Resposta de Sucesso (200 OK)
+```json
+{
+  "message": "ok",
+  "data": [
+    {
+      "id": 3,
+      "name": "Produto B",
+      "quantity": 2,
+      "unit_price": 50.0,
+      "description": "Outro produto"
+    }
+  ]
+}
+```
+
+#### Exemplo de Requisição
+```bash
+curl -X GET http://localhost:8000/api/user/2/products \
+  -H "Authorization: Bearer {TOKEN}"
+```
+
+---
+
 ## Gerenciamento de Produtos
 
 ### Listar Todos os Produtos
 Retorna uma lista de todos os produtos cadastrados.
 
 **Endpoint:** `GET /`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Método HTTP:** GET
 
 #### Resposta de Sucesso (200 OK)
@@ -286,7 +358,7 @@ curl -X GET http://localhost:8000/api/ \
 Cria um novo produto no catálogo.
 
 **Endpoint:** `POST /product`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Content-Type:** `application/json`
 
 #### Parâmetros (Body)
@@ -331,7 +403,7 @@ curl -X POST http://localhost:8000/api/product \
 Retorna as informações detalhadas de um produto específico.
 
 **Endpoint:** `GET /product/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Método HTTP:** GET
 
 #### Parâmetros
@@ -370,7 +442,7 @@ curl -X GET http://localhost:8000/api/product/1 \
 Atualiza as informações de um produto existente.
 
 **Endpoint:** `PUT /product/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Content-Type:** `application/json`
 
 #### Parâmetros
@@ -427,7 +499,7 @@ curl -X PUT http://localhost:8000/api/product/1 \
 Remove um produto do catálogo.
 
 **Endpoint:** `DELETE /product/{id}`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Método HTTP:** DELETE
 
 #### Parâmetros
@@ -463,7 +535,7 @@ curl -X DELETE http://localhost:8000/api/product/1 \
 Gera uma preferência de pagamento utilizando a API do MercadoPago e retorna URLs de checkout para o cliente.
 
 **Endpoint:** `POST /order`  
-**Autenticação:** Requerida ✅  
+**Autenticação:** Requerida   
 **Content-Type:** `application/json`
 
 #### Parâmetros (Body)
