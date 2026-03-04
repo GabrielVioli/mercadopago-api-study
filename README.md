@@ -138,11 +138,6 @@ danálise
 * [Sanctum](https://laravel.com/docs/sanctum)
 * [Boas práticas RESTful](https://restfulapi.net)
 
-## Licença
-
-Descreva aqui a licença do projeto ou remova esta seção se não for
-aplicável.
-
 ---
 
 *Última atualização: 4 de março de 2026*
