@@ -554,6 +554,18 @@ Gera uma preferência de pagamento utilizando a API do MercadoPago e retorna URL
 {
   "message": "ok",
   "data": {
+    "order": {
+      "id": 10,
+      "user_id": 3,
+      "product_id": 5,
+      "quantity": 2,
+      "unit_price": 49.99,
+      "total_price": 99.98,
+      "preference_id": "123456",
+      "status": "pending",
+      "created_at": "2026-03-04T12:00:00Z",
+      "updated_at": "2026-03-04T12:00:00Z"
+    },
     "checkout_url": "https://www.mercadopago.com/checkout/v1/redirect?pref_id=XYZ",
     "sandbox_url": "https://sandbox.mercadopago.com/checkout/v1/redirect?pref_id=XYZ"
   }

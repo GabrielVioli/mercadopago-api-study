@@ -102,8 +102,8 @@ esta disponível em `API_DOCUMENTATION.md`.
 
 * `User` possui muitos `Product`.
 * Produtos recebem `user_id` na criação.
-* Pedidos são construídos dinamicamente via serviço MercadoPago e não são
-  persistidos no banco.
+* Pedidos são construídos dinamicamente via serviço MercadoPago; após a
+  criação é registrada uma cópia no banco de dados em tabela `orders`.
 
 Modelos principais:
 
